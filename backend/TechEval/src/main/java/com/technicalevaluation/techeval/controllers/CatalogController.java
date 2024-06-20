@@ -5,12 +5,14 @@
 package com.technicalevaluation.techeval.controllers;
 
 import com.technicalevaluation.techeval.entity.Catalog;
-import com.technicalevaluation.techeval.repository.CatalogRepository;
+import com.technicalevaluation.techeval.service.CatalogService;
+import java.util.Collections;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,16 +30,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class CatalogController {
     
     @Autowired
-    CatalogRepository CatalogR;
+    CatalogService Service;
     
     @GetMapping()
     public List<Catalog> list() {
-        return CatalogR.findAll();
+        return Service.catalogList();
     }
     
     @GetMapping("/{id}")
     public Catalog get(@PathVariable String id) {
-        Optional<Catalog> res = CatalogR.findById(Long.valueOf(id));
+        Optional<Catalog> res = Service.getCatalogById(id);
         if(res.isPresent())
             return res.get();
         return null;
@@ -45,37 +47,33 @@ public class CatalogController {
     
     @PutMapping("/{id}")
     public ResponseEntity<?> put(@PathVariable String id, @RequestBody Catalog input) {
-        if(input.getName().trim().isEmpty() || input.getDescription().trim().isEmpty())
+        if(Service.isInvalid(input))
            return ResponseEntity.badRequest().body("Some required params are empty");
-        Optional<Catalog> findById = CatalogR.findById(Long.valueOf(id));
-        if(!findById.isPresent())
-            return ResponseEntity.notFound().build();
         
-        findById.get().setName(input.getName().trim());
-        findById.get().setDescription(input.getDescription().trim());
-
-        Catalog save = CatalogR.save(findById.get());
-        return ResponseEntity.ok(save);
+        Catalog updatedCatalog = Service.updateCatalog(id,input);
+        if(updatedCatalog == null)
+            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(updatedCatalog);
     }
     
     @PostMapping
     public ResponseEntity<?> post(@RequestBody Catalog input) {
-        if(input.getName().trim().isEmpty() || input.getDescription().trim().isEmpty())
-            return ResponseEntity.badRequest().body("Some required params are empty");
-        Catalog res = CatalogR.save(input);
-        return ResponseEntity.ok(res);
+         if(Service.isInvalid(input))
+           return ResponseEntity.badRequest().body("Some required params are empty");
+         
+        Catalog res = Service.create(input);
+        if(res != null)
+            return ResponseEntity.status(HttpStatus.CREATED).body(res);
+        else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("error", "The record wasn't save."));
     }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
-        if(!id.trim().isBlank()){
-            Optional<Catalog> res = CatalogR.findById(Long.valueOf(id));
-            if(!res.isPresent())
-                return ResponseEntity.badRequest().body("The ID not Exist.");
-            CatalogR.delete(res.get());
+        if(Service.delete(id)){            
             return ResponseEntity.ok("Deleted Item Correctly.");
         }
-        return ResponseEntity.badRequest().body("The ID not Exist.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The ID not Exist.");
     }
     
 }
