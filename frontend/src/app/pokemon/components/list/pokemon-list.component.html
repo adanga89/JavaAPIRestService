@@ -1,0 +1,23 @@
+@if(pokemonList){
+<div class="row justify-content-center align-items-center text-center">
+    @for(item of pokemonList.results; track $index){
+    <div class="col-sm-12 col-md-4 col-lg-2 my-3 align-items-center">
+        <div class="card border border-0" id="{{ $index }}">
+            <img [src]="getImage(item.name)" class="card-img-top rounded mx-auto d-block img-fluid" alt="{{ item.name }}" />
+            <div class="card-body">
+                <h5 class="card-title">{{ item.name | titlecase }}</h5>                
+                <a class="btn btn-primary" href="{{item.url}}">
+                    Ver más...
+                </a>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+} @else{
+<div class="m-0 vh-100 row justify-content-center align-items-center">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only"></span>
+    </div>
+</div>
+}

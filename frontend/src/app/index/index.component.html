@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="container text-center">
+      <div class="text-center">
+        <h3 class="flicker">Consumo de Servicio Spring Boot</h3>
+      </div>
+      <div class="m-0 vh-100 row justify-content-center align-items-center">
+        @for(item of data; track $index){
+        <div class="col-sm-12 col-md-6 my-3 align-items-center">
+          <div class="card border border-0" id="{{ $index }}">
+            <img
+              src="{{ item.image }}"
+              class="card-img-top"
+              alt="{{ item.title }}"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <h6 class="card-subtitle mb-2 text-body-secondary">
+                {{ item.subTitle }}
+              </h6>
+              <p class="card-text">{{ item.description }}</p>
+              <a class="btn btn-primary" routerLink="{{item.link}}">
+                Ir a {{ item.title }}
+              </a>
+            </div>
+          </div>
+        </div>
+        }@empty { Empty Data }
+      </div>
+    </div>
+  </div>
+  

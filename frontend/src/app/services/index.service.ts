@@ -15,14 +15,14 @@ export class IndexService {
         title: "Pokémon",
         subTitle: "subTitle",
         description: "Consumo de Servicio para la visualización pokeAPI. Se podrá visualizar la Información de un solo pokémon o el listado de los pokémon.",
-        link: "link",
+        link: "pokemon",
         image: "https://listfist.com/wp-content/uploads/pokemons.jpg"
       },
       {
         title: "Catálogo",
         subTitle: "subTitle",
         description: "Consumo de Servicio para la creación de un catálogo, los usuarios con rol de 'USER' solo viuslizarán los datos y los usuarios con rol de 'ADMIN' podrán Viusalizar, Editar y Eliminar los registros. ",
-        link: "link",
+        link: "catalog",
         image: "https://img.freepik.com/free-vector/businessman-holding-pencil-big-complete-checklist-with-tick-marks_1150-35019.jpg"
       }
     ];
