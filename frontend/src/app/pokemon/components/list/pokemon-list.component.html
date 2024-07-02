@@ -1,12 +1,14 @@
 @if(pokemonList){
+<app-pokemon-pagination [totalPokemon]="pokemonList.count"></app-pokemon-pagination>
 <div class="row justify-content-center align-items-center text-center">
     @for(item of pokemonList.results; track $index){
     <div class="col-sm-12 col-md-4 col-lg-2 my-3 align-items-center">
         <div class="card border border-0" id="{{ $index }}">
-            <img [src]="getImage(item.name)" class="card-img-top rounded mx-auto d-block img-fluid" alt="{{ item.name }}" />
+            <img [src]="getImage(item.name)" class="card-img-top rounded mx-auto d-block img-fluid"
+                alt="{{ item.name }}" />
             <div class="card-body">
-                <h5 class="card-title">{{ item.name | titlecase }}</h5>                
-                <a class="btn btn-primary" href="{{item.url}}">
+                <h5 class="card-title">{{ item.name | titlecase }}</h5>
+                <a class="btn btn-primary" [href]="getInformation(item.name)">
                     Ver más...
                 </a>
             </div>

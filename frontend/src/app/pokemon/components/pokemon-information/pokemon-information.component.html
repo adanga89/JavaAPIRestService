@@ -1,0 +1,20 @@
+<div class="container">
+    @if(pokemonInfo){
+    <div class="m-0 vh-100 row justify-content-center align-items-center">
+        <div class="col-sm-12">
+            <div class="text-center">
+                <img class="img-fluid" [src]="getImage(pokemonInfo.name)" alt="{{ pokemonInfo.name }}">
+                <h5>{{pokemonInfo.id}} . {{pokemonInfo.name | titlecase}}</h5>
+            </div>
+            <div class="bg-light">
+                
+                <div class="card-text">
+                    <pre class="bg-light">{{pokemonInfo | json}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    }@else{
+    Pokemon no found...
+    }
+</div>
