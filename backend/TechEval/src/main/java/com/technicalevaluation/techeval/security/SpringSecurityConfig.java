@@ -46,7 +46,7 @@ public class SpringSecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(authz -> authz              
             .requestMatchers(HttpMethod.GET, "/api/pokemon").permitAll()
-            .requestMatchers(HttpMethod.GET, "/api/pokemon/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/pokemon/**").permitAll()
             .requestMatchers(HttpMethod.GET, "/catalog").hasAnyRole("USER", "ADMIN")
             .requestMatchers(HttpMethod.POST, "/catalog").hasAnyRole("ADMIN")
             .requestMatchers(HttpMethod.PUT, "/catalog/*").hasAnyRole("ADMIN")
@@ -74,12 +74,12 @@ public class SpringSecurityConfig {
         return source;
     }
     
-    @Bean 
+    /*@Bean 
     FilterRegistrationBean<CorsFilter> corsFilter(){
         FilterRegistrationBean<CorsFilter> corsBean = new FilterRegistrationBean<CorsFilter>(
                 new CorsFilter(this.configurationSource()), null);
         corsBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return corsBean;
-    }
+    }*/
             
 }
