@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { PokemonsInterface } from "../../../interfaces/pokemonsInterface";
 import { PokemonService } from "../../../services/pokemon.service";
-import { Observable } from "rxjs";
 
 @Component({
     selector: 'app-pokemon-list',    
